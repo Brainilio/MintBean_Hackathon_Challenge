@@ -5,3 +5,7 @@
 
 # Challenge
 https://github.com/MintbeanHackathons/2020-05-20-tell-your-story-in-data/blob/master/Challenge.md
+ 
+# Link 
+
+https://brainilio.github.io/MintBean_Hackathon_Challenge/
