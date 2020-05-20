@@ -92,14 +92,12 @@ const getThirdScreen = () => {
     document.querySelector(".third-screen").style.display = 'block'
 
     let tl = gsap.timeline();
-    tl.to(".third-screen", { duration: 1, ease: "power1", y: -1000, onComplete: callGoogleData })
+    tl.to(".third-screen", { duration: 1, ease: "power1", y: -window.innerHeight, onComplete: callGoogleData })
 }
 
 
 
 const callGoogleData = () => {
-
-    document.querySelector('.third-screen').style.display = "block";
 
     // Load the Visualization API and the corechart package.
     google.charts.load('current', { 'packages': ['corechart'] });
