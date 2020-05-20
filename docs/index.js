@@ -14,7 +14,6 @@ let speedForTextInsertion = 100; /* in milliseconds */
 const typeWriter = () => {
     if (i < introToInsert.length) {
         introInsertTextElement.innerHTML += introToInsert.charAt(i)
-        console.log(introInsertTextElement);
         i++;
         setTimeout(typeWriter, speedForTextInsertion);
     }
@@ -73,22 +72,34 @@ const addTextToDivSecondScreen = () => {
     let t2 = gsap.timeline();
     t2.to(".textSecondFirst", { duration: 0.5, opacity: 1 })
     t2.to(".textSecondSecond", { duration: 0.5, opacity: 1 })
-    t2.to(".second-half", { duration: 2, y: 800, delay: 2 })
+    t2.to(".second-half", { duration: 2, y: 800, delay: 3 })
     t2.to(".textSecondSecond", { duration: 1, opacity: 0, x: window.innerWidth })
-    t2.to(".textSecondSecond", { duration: 1, opacity: 0, onComplete: wipeSecondScreen })
+    t2.to(".textSecondSecond", { duration: 1, opacity: 0, onComplete: getThirdScreen })
 
+}
+
+const intervalFunction = () => {
+    setTimeout(wipeSecondScreen, 200)
 }
 
 
 const wipeSecondScreen = () => {
     document.querySelector(".second-screen").remove();
-    document.querySelector(".textSecondFirst").remove();
-    document.querySelector(".textSecondSecond").remove();
-
-    callGoogleData()
+    getThirdScreen();
 }
 
+const getThirdScreen = () => {
+    document.querySelector(".third-screen").style.display = 'block'
+
+    let tl = gsap.timeline();
+    tl.to(".third-screen", { duration: 1, ease: "power1", y: -1000, onComplete: callGoogleData })
+}
+
+
+
 const callGoogleData = () => {
+
+    document.querySelector('.third-screen').style.display = "block";
 
     // Load the Visualization API and the corechart package.
     google.charts.load('current', { 'packages': ['corechart'] });
@@ -123,7 +134,7 @@ const callGoogleData = () => {
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
-        document.getElementById('chart-div').style.display = "block";
+
     }
 
 }

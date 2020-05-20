@@ -119,6 +119,12 @@ body {
 /* Third screen */
 
 .third-screen { 
-    
+    display: none ;
+    position: absolute; 
+    background-color: white; 
+    width: 400%; 
+    height: 500%; 
+    z-index: 30;  
+    top: 100%; 
 }
 
