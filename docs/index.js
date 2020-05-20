@@ -38,7 +38,7 @@ const changeText = () => {
 
     buttonForInsertion.addEventListener('click', () => {
         let tl2 = gsap.timeline();
-        tl2.to(".first-screen", { duration: 2, ease: "power2", scale: 50, onComplete: destroyDiv })
+        tl2.to(".first-screen", { duration: 2, ease: "power2", scale: 60, onComplete: destroyDiv })
 
     })
 }
@@ -49,9 +49,13 @@ const destroyDiv = () => {
 }
 
 const dragDivsFromBottom = () => {
+
+    document.querySelector(".first-half").style.opacity = '1'
+    document.querySelector(".first-half").style.opacity = '1'
+
     let tl = gsap.timeline();
-    tl.to(".first-half", { duration: 1.5, ease: "power1", y: -window.innerHeight })
-    tl.to(".second-half", { duration: 1.5, ease: "power1", y: -window.innerHeight, onComplete: addTextToDivSecondScreen })
+    tl.to(".first-half", { duration: 1, ease: "power1", y: -window.innerHeight })
+    tl.to(".second-half", { duration: 1, ease: "power1", y: -window.innerHeight, onComplete: addTextToDivSecondScreen })
 
 }
 
@@ -65,7 +69,63 @@ const addTextToDivSecondScreen = () => {
 
     removeThisClassOne.classList.add("textSecondFirst");
     removeThisClassTwo.classList.add("textSecondSecond");
+
+    let t2 = gsap.timeline();
+    t2.to(".textSecondFirst", { duration: 0.5, opacity: 1 })
+    t2.to(".textSecondSecond", { duration: 0.5, opacity: 1 })
+    t2.to(".second-half", { duration: 2, y: 800, delay: 2 })
+    t2.to(".textSecondSecond", { duration: 1, opacity: 0, x: window.innerWidth })
+    t2.to(".textSecondSecond", { duration: 1, opacity: 0, onComplete: wipeSecondScreen })
+
 }
 
+
+const wipeSecondScreen = () => {
+    document.querySelector(".second-screen").remove();
+    document.querySelector(".textSecondFirst").remove();
+    document.querySelector(".textSecondSecond").remove();
+
+    callGoogleData()
+}
+
+const callGoogleData = () => {
+
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', { 'packages': ['corechart'] });
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+            ['Mushrooms', 3],
+            ['Onions', 1],
+            ['Olives', 1],
+            ['Zucchini', 1],
+            ['Pepperoni', 2]
+        ]);
+
+        // Set chart options
+        var options = {
+            'title': 'How Much Pizza I Ate Last Night',
+            'width': 400,
+            'height': 300
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+        document.getElementById('chart-div').style.display = "block";
+    }
+
+}
 
 
